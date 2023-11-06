@@ -12,12 +12,12 @@ class CustomBotonWidget extends StatelessWidget {
     final widthQuery = MediaQuery.of(context).size.width;
     return ElevatedButton(
       style: ButtonStyle(
-        elevation: MaterialStatePropertyAll(2),
-        shape: MaterialStatePropertyAll(StadiumBorder()),
+        elevation: const MaterialStatePropertyAll(2),
+        shape: const MaterialStatePropertyAll(StadiumBorder()),
         backgroundColor: MaterialStateProperty.all(Colors.orange)
 
       ),
-      onPressed: () => onPressed, 
+      onPressed: () => onPressed(), 
       child: SizedBox(
         width: widthQuery * 0.3,
         height: 55,
