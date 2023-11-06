@@ -1,5 +1,6 @@
 import 'package:business_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -65,7 +66,7 @@ class _FormState extends State<_Form> {
                 child: IconButton(
                   icon: const Icon(Icons.remove_red_eye_rounded),
                   onPressed: () {
-                    
+
                   },
                 ),
               )
@@ -74,7 +75,10 @@ class _FormState extends State<_Form> {
 
           CustomBotonWidget(
             text: 'Iniciar sesión', 
-            onPressed: (){}
+            onPressed: (){
+              context.pushReplacement('/home');
+              
+            }
           )
         ],
       ),
