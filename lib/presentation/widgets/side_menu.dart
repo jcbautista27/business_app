@@ -19,7 +19,7 @@ class _SideMenuState extends State<SideMenu> {
       onDestinationSelected: (value) {
         setState(() {});
         if (value == 8){
-          print(value);
+          context.pushReplacement("/");
           return;
         }
         final menuItem = appMenuItems[value];

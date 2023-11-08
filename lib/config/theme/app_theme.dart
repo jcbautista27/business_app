@@ -7,7 +7,8 @@ class AppTheme{
 
   ThemeData getTheme() => ThemeData(
     useMaterial3: true,
-    brightness: isDarkMode? Brightness.dark : Brightness.light
+    brightness: isDarkMode? Brightness.dark : Brightness.light,
+    colorSchemeSeed: Colors.orange
 );
 
 }
