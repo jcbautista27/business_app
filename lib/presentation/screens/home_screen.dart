@@ -1,11 +1,9 @@
 import 'package:business_app/config/menu/menu_items.dart';
-import 'package:business_app/presentation/widgets/custom_card.dart';
-import 'package:business_app/presentation/widgets/shared/custom_appbar.dart';
-import 'package:business_app/presentation/widgets/side_menu.dart';
+import 'package:business_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  
+  const HomeScreen({super.key});  
 
   // List itemMenu = [
   //   //[title, color, image]

@@ -20,44 +20,82 @@ class _HomeProduccionState extends State<HomeProduccion> {
     final textStyle = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-            child: Text("PARTE DE PRODUCCIÓN", style: textStyle.titleMedium,),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: Text("Ingreso de produccion diaria", style: textStyle.bodyMedium,),
-          ),
-          Stepper(
-            connectorColor: const MaterialStatePropertyAll(Colors.orange),
-            steps: getSteps(),
-            currentStep: currentStep,
-            onStepTapped: (value) {
-              setState(() {
-                currentStep = value;
-              });
-            },
-            onStepContinue: () {
-              final isLastStep = currentStep == getSteps().length -1;
-              if (!isLastStep){
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              child: Text("PARTE DE PRODUCCIÓN", style: textStyle.titleMedium,),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Text("Ingreso de produccion diaria", style: textStyle.bodyMedium,),
+            ),
+            Stepper(
+              connectorColor: const MaterialStatePropertyAll(Colors.orange),
+              steps: getSteps(),
+              currentStep: currentStep,
+              onStepTapped: (value) {
                 setState(() {
-                  currentStep += 1;
+                  currentStep = value;
                 });
-              }
-            },
-            onStepCancel: () {
-              if (currentStep == 0){
-                return;
-              }
-              setState(() {
-                currentStep -= 1;
-              });
-            },
-          ),
-        ],
+              },
+              onStepContinue: () {
+                //print("hola");
+                final isLastStep = currentStep == getSteps().length -1;
+                if (!isLastStep){
+                  setState(() {
+                    currentStep += 1;
+                  });
+                }else{
+                  //guardar la data
+                  // ignore: avoid_print
+                  print("guardar");
+                }
+                
+              },
+              onStepCancel: () {
+                if (currentStep == 0){
+                  return;
+                }
+                setState(() {
+                  currentStep -= 1;
+                });
+              },
+              controlsBuilder: (context, details) {
+                final isLastStep = currentStep == getSteps().length -1;
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: const ButtonStyle(
+                            foregroundColor: MaterialStatePropertyAll(Colors.white),
+                            backgroundColor: MaterialStatePropertyAll(Colors.orange)
+                          ),
+                          onPressed: () => details.onStepContinue?.call(),
+                          child: isLastStep? const Text("Guardar") :const Text("Siguiente"),
+                        ),
+                      ),
+      
+                      const SizedBox(width: 10,),
+      
+                      currentStep == 0? const SizedBox() :Expanded(
+                        child: ElevatedButton(
+                          onPressed: currentStep == 0? null :() => details.onStepCancel?.call(),
+                          child: const Text("Atrás"),
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+              
+            ),
+          ],
+        ),
       )
     );
   }
@@ -83,7 +121,7 @@ class _HomeProduccionState extends State<HomeProduccion> {
                 child: IconButton(
                   icon: const Icon(Icons.search_outlined),
                   onPressed: () {
-
+                    showSearch(context: context, delegate: CustomSearch());
                   },
                 ),
               )
@@ -110,14 +148,14 @@ class _HomeProduccionState extends State<HomeProduccion> {
     ),
 
     Step(
-      title: const Text("Fecha"), 
+      title: const Text("Resumen"), 
       state: currentStep > 2 ? StepState.complete : StepState.indexed,
       isActive: currentStep >= 2,
       content: const Column(
         children: [
           CustomTextWidget(
             icon: Icons.numbers_outlined, 
-            placeholder: 'Cantidad', 
+            placeholder: 'Resumen', 
             keyboardType: TextInputType.datetime, 
             isPassword: false
           ),
@@ -125,4 +163,100 @@ class _HomeProduccionState extends State<HomeProduccion> {
       )
     ),
   ];
+}
+
+class CustomSearch extends SearchDelegate{
+
+  List<String> allData = [
+    'OT 2550 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2551 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2552 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2553 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2554 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2555 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2556 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2557 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2558 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2559 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'OT 2560 - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500', 
+    'Hola - Agricola Don Ricardo - Pallet de madera 1.00 x 1.20 7/5 cTaco - 1500' 
+  ];
+
+  @override
+  String get searchFieldLabel => "Buscar";
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        }, 
+      )
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, '');
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+
+    List<String> matchQuery = [];
+    for (var item in allData) {
+      if(item.toLowerCase().contains(query.toLowerCase())){
+        matchQuery.add(item);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result),
+          leading: const Icon(Icons.pallet),
+          dense: true,
+          
+          onTap: () {
+            
+          },
+        );
+      },
+    );
+
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    
+    List<String> matchQuery = [];
+    for (var item in allData) {
+      if(item.toLowerCase().contains(query.toLowerCase())){
+        matchQuery.add(item);
+      }
+    }
+    return ListView.builder(
+      itemCount: matchQuery.length,
+      itemBuilder: (context, index) {
+        var result = matchQuery[index];
+        return ListTile(
+          title: Text(result),
+          leading: const Icon(Icons.pallet),
+          dense: true,
+          
+          onTap: () {
+            
+          },
+        );
+      },
+    );
+  }
 }

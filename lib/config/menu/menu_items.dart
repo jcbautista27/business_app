@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MenuItems{
   final String title;
-  final color;
+  final MaterialColor color;
   final String image;
   final String link;
 
