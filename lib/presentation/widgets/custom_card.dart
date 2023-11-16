@@ -32,7 +32,7 @@ class CustomCard extends StatelessWidget {
 
             //title
             const SizedBox(height: 15,),
-            Text(title, style: const TextStyle(fontWeight: FontWeight.w500),),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.black87),),
             
             //image
             Padding(

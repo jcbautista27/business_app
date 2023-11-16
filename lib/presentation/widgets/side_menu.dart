@@ -1,27 +1,35 @@
 import 'package:business_app/config/menu/menu_items.dart';
+import 'package:business_app/presentation/providers/state_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class SideMenu extends StatefulWidget {
+class SideMenu extends ConsumerStatefulWidget {
   const SideMenu({Key? key}) : super(key: key);
 
   @override
-  State<SideMenu> createState() => _SideMenuState();
+  SideMenuState createState() => SideMenuState();
 }
 
-class _SideMenuState extends State<SideMenu> {
+class SideMenuState extends ConsumerState<SideMenu> {
   @override
   Widget build(BuildContext context) {
 
     final hasNotch = MediaQuery.of(context).viewPadding.top < 35;
+    final isDarkMode = ref.watch(isDarkModeProvider);
 
     return NavigationDrawer(
       onDestinationSelected: (value) {
         setState(() {});
-        if (value == 8){
+        if (value == 8) {
+          ref.read(isDarkModeProvider.notifier).toggleDarkMode();
+          return;
+        }
+        if (value == 9){
           context.pushReplacement("/");
           return;
         }
+
         final menuItem = appMenuItems[value];
         
         //Navegation
@@ -61,6 +69,15 @@ class _SideMenuState extends State<SideMenu> {
             icon: Image.asset(value.image, width: 25,), 
             label: Text(value.title)
           )
+        ),
+
+        NavigationDrawerDestination(
+          icon: isDarkMode 
+          ? const Icon(Icons.light_mode_outlined)
+          : const Icon(Icons.dark_mode_outlined), 
+          label: isDarkMode
+          ? const Text('Modo Claro')
+          : const Text('Modo Oscuro')
         ),
 
         const NavigationDrawerDestination(
