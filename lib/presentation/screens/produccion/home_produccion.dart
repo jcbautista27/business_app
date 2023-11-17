@@ -106,6 +106,7 @@ class _HomeProduccionState extends State<HomeProduccion> {
       state: currentStep > 0 ? StepState.complete : StepState.indexed,
       isActive: currentStep >= 0,
       content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             alignment: AlignmentDirectional.topEnd,
@@ -127,12 +128,23 @@ class _HomeProduccionState extends State<HomeProduccion> {
               )
             ]
           ),
+
+          const Text("Complejo Agroindustrial Beta S.A."),
+          const Text("Pallet de madera 1.20 x 1.00mt 7/5 cTaco"),
+          const Row(
+            children: [
+              Text("Cantidad: 500"),
+              Spacer(),
+              Text("Avance: 350")
+            ],
+          )
+
         ],
       )
     ),
 
     Step(
-      title: const Text("Cantidad"), 
+      title: const Text("Fabricacíon"), 
       state: currentStep > 1 ? StepState.complete : StepState.indexed,
       isActive: currentStep >= 1,
       content: const Column(
@@ -143,22 +155,52 @@ class _HomeProduccionState extends State<HomeProduccion> {
             keyboardType: TextInputType.number, 
             isPassword: false
           ),
+          CustomTextWidget(
+            icon: Icons.date_range_outlined, 
+            placeholder: 'Fecha', 
+            keyboardType: TextInputType.datetime, 
+            isPassword: false
+          ),
         ],
       )
     ),
 
     Step(
-      title: const Text("Resumen"), 
+      title: const Text("Almacén"), 
       state: currentStep > 2 ? StepState.complete : StepState.indexed,
       isActive: currentStep >= 2,
       content: const Column(
         children: [
           CustomTextWidget(
-            icon: Icons.numbers_outlined, 
-            placeholder: 'Resumen', 
+            icon: Icons.file_copy_outlined, 
+            placeholder: 'Almacén', 
+            keyboardType: TextInputType.text, 
+            isPassword: false
+          ),
+          CustomTextWidget(
+            icon: Icons.file_copy_outlined, 
+            placeholder: 'Tipo de Movimiento', 
             keyboardType: TextInputType.datetime, 
             isPassword: false
           ),
+        ],
+      )
+    ),
+
+     Step(
+      title: const Text("Resumen"), 
+      state: currentStep > 2 ? StepState.complete : StepState.indexed,
+      isActive: currentStep >= 2,
+      content: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("Complejo Agroindustrial Beta S.A."),
+          Text("Pallet de madera 1.20 x 1.00mt 7/5 cTaco"),
+          Text("Almacen Producto terminado"),
+          Text("Ingreso por producción"),
+          Text("29/02/2024"),
+          Text("Cantidad: 450"),
+          
         ],
       )
     ),

@@ -1,7 +1,9 @@
+import 'package:business_app/presentation/providers/state_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class CustomCard extends StatelessWidget {
+class CustomCard extends ConsumerWidget {
 
   final String title;
   // ignore: prefer_typing_uninitialized_variables
@@ -9,16 +11,18 @@ class CustomCard extends StatelessWidget {
   final String image;
   final String link;
   final double borderRadius = 12;
+  final int index;
 
   const CustomCard({Key? key, 
     required this.title, 
     required this.color, 
     required this.image,
-    required this.link
+    required this.link,
+    required this.index
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Container(      
@@ -56,6 +60,7 @@ class CustomCard extends StatelessWidget {
                   child: IconButton(
                     icon: const Icon(Icons.arrow_forward_ios_outlined, color: Colors.white),
                     onPressed: () {
+                      ref.read(currentIndexDrawerProvider.notifier).changeCurrentIndex(index);
                       context.push(link);
                     },
                   )

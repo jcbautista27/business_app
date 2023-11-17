@@ -5,7 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class SideMenu extends ConsumerStatefulWidget {
-  const SideMenu({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  const SideMenu({Key? key, required this.scaffoldKey}) : super(key: key);
 
   @override
   SideMenuState createState() => SideMenuState();
@@ -17,10 +18,13 @@ class SideMenuState extends ConsumerState<SideMenu> {
 
     final hasNotch = MediaQuery.of(context).viewPadding.top < 35;
     final isDarkMode = ref.watch(isDarkModeProvider);
+    final indexNavigator = ref.watch(currentIndexDrawerProvider);
 
     return NavigationDrawer(
+      selectedIndex: indexNavigator,
       onDestinationSelected: (value) {
         setState(() {});
+        ref.watch(currentIndexDrawerProvider.notifier).changeCurrentIndex(value);
         if (value == 8) {
           ref.read(isDarkModeProvider.notifier).toggleDarkMode();
           return;
@@ -34,6 +38,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
         
         //Navegation
         context.push(menuItem.link);
+        widget.scaffoldKey.currentState?.closeDrawer();
       },
       
       children: [

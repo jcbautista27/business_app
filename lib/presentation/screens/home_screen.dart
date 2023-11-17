@@ -1,8 +1,10 @@
 import 'package:business_app/config/menu/menu_items.dart';
+import 'package:business_app/presentation/providers/state_providers.dart';
 import 'package:business_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});  
 
   // List itemMenu = [
@@ -18,10 +20,12 @@ class HomeScreen extends StatelessWidget {
   // ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scaffoldKey = GlobalKey<ScaffoldState>();
     const menuitem = appMenuItems;
     return Scaffold(
-      drawer: const SideMenu(),
+      key: scaffoldKey,
+      drawer: SideMenu(scaffoldKey: scaffoldKey,),
       body: CustomScrollView(
         slivers: [
           const SliverAppBar(
@@ -48,6 +52,7 @@ class HomeScreen extends StatelessWidget {
                 color: menuItems.color, 
                 image: menuItems.image,
                 link: menuItems.link,
+                index: index,
               );
             },
           )

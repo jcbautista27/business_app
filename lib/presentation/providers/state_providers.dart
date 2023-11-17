@@ -14,3 +14,13 @@ class IsDarkMode extends _$IsDarkMode {
   }
 
 }
+
+@Riverpod(keepAlive: true)
+class CurrentIndexDrawer extends _$CurrentIndexDrawer {
+  @override
+   int build() => 0;
+
+   void changeCurrentIndex(int index){
+    state = index;
+   }
+}
