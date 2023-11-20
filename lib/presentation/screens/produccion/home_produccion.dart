@@ -1,5 +1,6 @@
 import 'package:business_app/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeProduccion extends StatefulWidget {
 
@@ -19,7 +20,20 @@ class _HomeProduccionState extends State<HomeProduccion> {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+              icon: const Icon(Icons.history_outlined, size: 30,), 
+              onPressed: () {  
+                context.push('/produccion/historial');
+              },
+
+            ),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

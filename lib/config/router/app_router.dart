@@ -7,6 +7,7 @@ import 'package:business_app/presentation/screens/home_screen.dart';
 import 'package:business_app/presentation/screens/login_screen.dart';
 import 'package:business_app/presentation/screens/logistica/home_logistica.dart';
 import 'package:business_app/presentation/screens/procesos/home_procesos.dart';
+import 'package:business_app/presentation/screens/produccion/historial_produccion.dart';
 import 'package:business_app/presentation/screens/produccion/home_produccion.dart';
 import 'package:business_app/presentation/screens/rrhh/home_rrhh.dart';
 import 'package:business_app/presentation/screens/ventas/home_ventas.dart';
@@ -57,6 +58,13 @@ final appRouter = GoRouter(
       path: '/produccion',
       name: HomeProduccion.name,
       builder: (context, state) => const HomeProduccion(),
+      routes: [
+        GoRoute(
+          path: 'historial',
+          name: HistorialProduccion.name,
+          builder: (context, state) => const HistorialProduccion(),
+        )
+      ]
     ),
     GoRoute(
       path: '/rrhh',
